@@ -1,0 +1,49 @@
+{% extends "myprojapp/base.html" %}
+{% block content %}
+<form class="form-control" id="schedule" action="/myprojapp/viewSchedule/" method="post" >
+  <input type="hidden" name="thisUser" id="thisUser" value="{{ user.username }}">
+  {% csrf_token %}
+  <table class="table table-dark table-sm table-bordered" id="mytab" name="mytab">
+    <thead>
+      <tr>
+        <th scope="col"></th>
+        <th scope="col">8am-9am</th>
+        <th scope="col">9am-10am</th>
+        <th scope="col">10am</th>
+        <th scope="col">11am</th>
+        <th scope="col">12pm</th>
+        <th scope="col">1pm</th>
+        <th scope="col">2pm</th>
+        <th scope="col">3pm</th>
+        <th scope="col">4pm</th>
+        <th scope="col">5pm</th>
+        <th scope="col">6pm</th>
+        <th scope="col">7pm</th>
+        <th scope="col">8pm</th>
+        <th scope="col">9pm</th>
+        <th scope="col">10pm</th>
+        <th scope="col">11pm</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for key, value in things.items %}
+      <tr>
+        <th>{{ key }}</th>
+        {% for v, d in value.items %}
+        {% if d == "1" %}
+        <td id="{{ key }}{{v}}" name="{{ key }}{{v}}" style="background-color: #F7F7F2">
+          <input type="hidden" name="{{ key }}{{v}}In" id="{{ key }}{{v}}In" value="{{d}}">
+        </td>
+        {% else %}
+          <td id="{{ key }}{{v}}" name="{{ key }}{{v}}">
+            <input type="hidden" name="{{ key }}{{v}}In" id="{{ key }}{{v}}In" value="{{d}}">
+          </td>
+        {% endif %}
+        {% endfor %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <input id="submit" name="submit" type="submit" value="Submit" />
+</form>
+{% endblock content %}

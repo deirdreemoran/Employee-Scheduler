@@ -1,0 +1,37 @@
+{% extends "myprojapp/base.html" %}
+{% block content %}
+{% csrf_token %}
+  <table class="table table-dark table-sm table-bordered" id="mytab" name="mytab">
+    <thead>
+      <tr>
+        <th scope="col"></th>
+        <th scope="col">8am-9am</th>
+        <th scope="col">9am-10am</th>
+        <th scope="col">10am</th>
+        <th scope="col">11am</th>
+        <th scope="col">12pm</th>
+        <th scope="col">1pm</th>
+        <th scope="col">2pm</th>
+        <th scope="col">3pm</th>
+        <th scope="col">4pm</th>
+        <th scope="col">5pm</th>
+        <th scope="col">6pm</th>
+        <th scope="col">7pm</th>
+        <th scope="col">8pm</th>
+        <th scope="col">9pm</th>
+        <th scope="col">10pm</th>
+        <th scope="col">11pm</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for key, value in things.items %}    
+      <tr>
+        <th>{{ key }}</th>
+        {% for v, d in value.items %}
+        <td id="{{ key }}{{v}}" name="{{ key }}{{v}}" value="{{d}}">{{d}}</td>
+        {% endfor %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock content %}
