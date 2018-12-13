@@ -23,7 +23,7 @@ def create_connection(db_file):
 
 def getSchedule1(conn):
 	cur = conn.cursor()
-	cur.execute("SELECT studentSchedule1 FROM myprojapp_studentSchedule")
+	cur.execute("SELECT schedule1 FROM myprojapp_scheduler WHERE id = 1")
 	rows = cur.fetchone()
 	sizeRow = len(rows[0]) - 1
 	myRow = rows[0]
@@ -32,7 +32,7 @@ def getSchedule1(conn):
 
 def getSchedule2(conn):
 	cur = conn.cursor()
-	cur.execute("SELECT studentSchedule2 FROM myprojapp_studentSchedule")
+	cur.execute("SELECT schedule2 FROM myprojapp_scheduler WHERE id = 1")
 	rows = cur.fetchone()
 	sizeRow = len(rows[0]) - 1
 	myRow = rows[0]

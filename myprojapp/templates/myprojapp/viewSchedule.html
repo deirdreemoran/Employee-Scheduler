@@ -3,6 +3,7 @@
 <form class="form-control" id="schedule" action="/myprojapp/viewSchedule/" method="post" >
   <input type="hidden" name="thisUser" id="thisUser" value="{{ user.username }}">
   {% csrf_token %}
+ <h1>HI {{user.username}}</h1>
   <table class="table table-dark table-sm table-bordered" id="mytab" name="mytab">
     <thead>
       <tr>
