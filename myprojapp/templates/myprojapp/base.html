@@ -40,19 +40,6 @@
 
 	<main role="main" class="container">
 	     {% block content %}{% endblock %}
-<!--    <div class="col-md-4">
-	      <div class="content-section">
-	        <h3>Our Sidebar</h3>
-	        <p class='text-muted'>You can put any information here you'd like.
-	          <ul class="list-group">
-	            <li class="list-group-item list-group-item-light">Latest Posts</li>
-	            <li class="list-group-item list-group-item-light">Announcements</li>
-	            <li class="list-group-item list-group-item-light">Calendars</li>
-	            <li class="list-group-item list-group-item-light">etc</li>
-	          </ul>
-	        </p>
-	       </div>
-	    </div> -->
 	</main>
 	  <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -63,7 +50,6 @@
     	$('td').click(function () {
 
 			if($(this).css("background-color") == "rgb(247, 247, 242)" ){
-				console.log("ADSFASDF");
 				$(this).css('backgroundColor', '#212529');
 				var myid = $(this).attr('id');
 				myid = myid + 'In';
@@ -78,23 +64,7 @@
 				$(mything).val("1");
 			}
 
-		/*	if(!$(this).data('clickedPreviously')) {
-			    $(this).data('clickedPreviously', true) ;
-			 	$(this).css('backgroundColor', '#F7F7F2');
-				var myid = $(this).attr('id');
-				myid = myid + "In";
-				var mything = document.getElementById(myid);
-				$(mything).val("1");
-			
-			} 
-			else {
-				$(this).data('clickedPreviously', false) ;
-				$(this).css('backgroundColor', '#212529');
-				var myid = $(this).attr('id');
-				myid = myid + 'In';
-            	var mything = document.getElementById(myid);
-				$(mything).val("0");
-			} */
+		
 		});	
     </script>
 </body>
