@@ -37,15 +37,19 @@ public class Scheduler {
             Statement stmt  = c.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             int count = 0;
-            
+            int marker = 1;
             // loop through the result set and get schedules, names and ids
             while (rs.next()) {
-                String str = rs.getString("schedule");
-                String[] aStr = str.split("");
-                myStudents.add(aStr);
-                myStudentsNames[count] = rs.getString("name");
-                myStudentIds[count] = rs.getInt("id");
-                count++;
+                if(marker == 0 ){
+                    String str = rs.getString("schedule");
+                    String[] aStr = str.split("");
+                    myStudents.add(aStr);
+                    myStudentsNames[count] = rs.getString("name");
+                    myStudentIds[count] = rs.getInt("id");
+                    count++;
+                }
+                marker = 0;
+
             }
         }
         catch ( Exception e )

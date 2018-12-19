@@ -31,7 +31,7 @@ def getSchedule2(conn):
 
 def getNames(conn):
 	cur = conn.cursor()
-	cur.execute("SELECT name FROM myprojapp_schedule")
+	cur.execute("SELECT name FROM myprojapp_schedule WHERE id != 1")
 	rows = cur.fetchall()
 	malist = []
 	for name in rows:
