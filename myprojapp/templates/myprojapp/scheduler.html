@@ -1,6 +1,7 @@
 {% extends "myprojapp/base.html" %}
 {% block content %}
 {% csrf_token %}
+<h3>McHenry Circulation Desk</h3>
   <table class="table table-dark table-sm table-bordered" id="mytab" name="mytab">
     <thead>
       <tr>
@@ -28,10 +29,67 @@
       <tr>
         <th>{{ key }}</th>
         {% for v, d in value.items %}
-        <td id="{{ key }}{{v}}" name="{{ key }}{{v}}" value="{{d}}">{{d}}</td>
+        <td class="gh" id="gh" name="gh" value="{{d}}">{{ d }}</td>
         {% endfor %}
       </tr>
       {% endfor %}
+    </tbody>
+  </table>
+  
+  <h3>Science and Engineering Circulation Desk</h3>
+ <table class="table table-dark table-sm table-bordered" id="myothertab" name="myothertab">
+    <thead>
+      <tr>
+        <th scope="col"></th>
+        <th scope="col">8am</th>
+        <th scope="col">9am</th>
+        <th scope="col">10am</th>
+        <th scope="col">11am</th>
+        <th scope="col">12pm</th>
+        <th scope="col">1pm</th>
+        <th scope="col">2pm</th>
+        <th scope="col">3pm</th>
+        <th scope="col">4pm</th>
+        <th scope="col">5pm</th>
+        <th scope="col">6pm</th>
+        <th scope="col">7pm</th>
+        <th scope="col">8pm</th>
+        <th scope="col">9pm</th>
+        <th scope="col">10pm</th>
+        <th scope="col">11pm</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for key, value in things2.items %}    
+      <tr>
+        <th>{{ key }}</th>
+        {% for v, d in value.items %}
+        <td id="{{ key }}{{v}}" name="{{ key }}{{v}}" value="{{d}}">{{ d }}</td>
+        {% endfor %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <h3>Total Number of Hours Per Student Assisant</h3>
+
+  <table class="table table-dark table-sm table-bordered" id="myothertab" name="myothertab">
+    <thead>
+      <tr>
+        <th>NAME</th>
+        {% for key, value in nameNumShifts.items %}
+        <th scope="col">{{ key }}</th>
+        {% endfor %}  
+
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+       <th>TOTAL HOURS</th>
+          {% for key, value in nameNumShifts.items %}    
+          <td id="{{ key }}{{ value }}" name="{{ key }}{{value}}" value="{{value}}">{{ value }}</td>
+          {% endfor %}
+       <th>{{ total }}</th>
+      </tr>
     </tbody>
   </table>
 {% endblock content %}

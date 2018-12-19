@@ -4,15 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.sql.*;
 import java.util.Arrays;
-
-
+import java.lang.*;
      
 public class Scheduler {
     public static void main(String[] args) {
         //query database for student schedules, store values in global variables
         ArrayList<String[]> myStudents = new ArrayList<String[]>();
         String[] myStudentsNames = new String[20];
-        int[] myStudentIds = new int[20]; 
+        int[] myStudentIds = new int[20];
+        int[] scheduledShifts = new int[20]; 
         int maxShiftLength = 4;
         int scheduleLength = 112;
         String[] daysOfWeek = {" ", "MON-->", "TUE-->", "WED-->", "THUR-->", "FRI-->", "SAT-->", " "}; 
@@ -21,11 +21,11 @@ public class Scheduler {
         String[] scheduleInits1 = new String[scheduleLength];
         String[] scheduleInits2 = new String[scheduleLength];
         getSchedules(myStudents, myStudentsNames, myStudentIds);
-        initializeResultSchedules(scheduleInits1, scheduleInits2, schedule1, schedule2, scheduleLength);	
-		scheduleStudents(myStudents, myStudentsNames, myStudentIds, maxShiftLength, scheduleLength, schedule1, schedule2, scheduleInits1, scheduleInits2);
-		saveSchedules(scheduleInits1, scheduleInits2);
-        printSchedules(daysOfWeek, scheduleInits1, scheduleInits2);
-	}
+        initializeResultSchedules(scheduleInits1, scheduleInits2, schedule1, schedule2, scheduleLength);    
+        scheduleStudents(myStudents, myStudentsNames, myStudentIds, maxShiftLength, scheduleLength, schedule1, schedule2, scheduleInits1, scheduleInits2, scheduledShifts);
+        saveSchedules(scheduleInits1, scheduleInits2, scheduledShifts);
+        //printSchedules(daysOfWeek, scheduleInits1, scheduleInits2);
+    }
 
     public static void getSchedules(ArrayList<String[]> myStudents, String[] myStudentsNames, int[] myStudentIds) {
         Connection c = null;
@@ -55,19 +55,25 @@ public class Scheduler {
         }
     }
 
-    public static void saveSchedules(String[] scheduleInits1, String[] scheduleInits2){
+    public static void saveSchedules(String[] scheduleInits1, String[] scheduleInits2, int[] scheduledShifts){
         String mystring1 = String.join(",", scheduleInits1);
         String mystring2 = String.join(",", scheduleInits2);
-        System.out.println(mystring1);
+        int i, arrLen = scheduledShifts.length;
+        StringBuilder tmp = new StringBuilder();
+        for (i=0; i<arrLen-1; i++){
+            tmp.append(scheduledShifts[i] +",");
+        }
+        String mystring3 = tmp.toString();
         Connection c2 = null;
         try
         {
             Class.forName("org.sqlite.JDBC");
             c2 = DriverManager.getConnection("jdbc:sqlite:db.sqlite3");
-            String sql = "UPDATE myprojapp_scheduler SET schedule1 = ?, schedule2 = ? WHERE id = 1;";
+            String sql = "UPDATE myprojapp_scheduler SET schedule1 = ?, schedule2 = ?, scheduledShifts = ? WHERE id = 1;";
             PreparedStatement stmt  = c2.prepareStatement(sql);
             stmt.setString(1, mystring1);
             stmt.setString(2, mystring2);
+            stmt.setString(3, mystring3);
             stmt.executeUpdate();
 
         }
@@ -88,7 +94,7 @@ public class Scheduler {
         }
     }
 
-    public static void scheduleStudents(ArrayList<String[]> myStudents, String[] myStudentsNames, int[]myStudentIds, int maxShiftLength, int scheduleLength, String[] schedule1, String[] schedule2, String[] scheduleInits1, String[] scheduleInits2){
+    public static void scheduleStudents(ArrayList<String[]> myStudents, String[] myStudentsNames, int[]myStudentIds, int maxShiftLength, int scheduleLength, String[] schedule1, String[] schedule2, String[] scheduleInits1, String[] scheduleInits2, int[] scheduledShifts){
         for(int i = 0; i < 20; i++){
             int position = 0;
             for(int j = 0; j < myStudents.size(); j++){
@@ -102,8 +108,19 @@ public class Scheduler {
                                     if(aStudent[slot].equals("1") && schedule1[slot].equals("0")){
                                         schedule1[slot] = "1";
                                         aStudent[slot] = "0";
+                                        scheduledShifts[position] += 1;
                                         scheduleInits1[slot] = myStudentsNames[position];
+                                        if(slot == 14 || slot == 30 || slot == 46 || slot == 62 || 
+                                            slot == 78 || slot == 94|| slot == 110){
+                                            if(aStudent[slot + 1].equals("1") && schedule1[slot + 1].equals("0")){
+                                                schedule1[slot + 1] = "1";
+                                                aStudent[slot + 1] = "0";
+                                                scheduledShifts[position] += 1;
+                                                scheduleInits1[slot + 1] = myStudentsNames[position];
+                                            }
+                                        }                                        
                                         slot++;
+
                                     }
                                     else{
                                         break;
@@ -121,7 +138,17 @@ public class Scheduler {
                                     if(aStudent[slot].equals("1") && schedule2[slot].equals("0")){
                                         schedule2[slot] = "1";
                                         aStudent[slot] = "0";
+                                        scheduledShifts[position] += 1;
                                         scheduleInits2[slot] = myStudentsNames[position];
+                                        if(slot == 14 || slot == 30 || slot == 46 || slot == 62 || 
+                                            slot == 78 || slot == 94|| slot == 110){
+                                            if(aStudent[slot + 1].equals("1") && schedule2[slot + 1].equals("0")){
+                                                schedule2[slot + 1] = "1";
+                                                aStudent[slot + 1] = "0";
+                                                scheduledShifts[position] += 1;
+                                                scheduleInits2[slot + 1] = myStudentsNames[position];
+                                            }
+                                        }   
                                         slot++;
                                     }
                                     else{

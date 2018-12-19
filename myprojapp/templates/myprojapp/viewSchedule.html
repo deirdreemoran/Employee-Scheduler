@@ -3,12 +3,12 @@
 <form class="form-control" id="schedule" action="/myprojapp/viewSchedule/" method="post" >
   <input type="hidden" name="thisUser" id="thisUser" value="{{ user.username }}">
   {% csrf_token %}
- <h1>HI {{user.username}}</h1>
+ <h1>Your availability:</h1>
   <table class="table table-dark table-sm table-bordered" id="mytab" name="mytab">
     <thead>
       <tr>
         <th scope="col"></th>
-        <th scope="col">8</th>
+        <th scope="col">8am</th>
         <th scope="col">9am</th>
         <th scope="col">10am</th>
         <th scope="col">11am</th>
@@ -45,6 +45,6 @@
       {% endfor %}
     </tbody>
   </table>
-  <input id="submit" name="submit" type="submit" value="Submit" />
+  <input id="submit" name="submit" type="submit" value="Save" />
 </form>
 {% endblock content %}
